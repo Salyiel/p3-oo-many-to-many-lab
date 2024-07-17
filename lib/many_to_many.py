@@ -31,6 +31,12 @@ class Book:
         self.title = title
         Book.all.append(self)
 
+    def contracts(self):
+        return [contract for contract in Contract.all if contract.book == self]
+    
+    def authors(self):
+        return [contract.author for contract in self.contracts()]
+
     def __repr__(self):
         return f'<Book title={self.title}>'
     pass
