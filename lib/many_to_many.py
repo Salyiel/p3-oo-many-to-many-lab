@@ -25,8 +25,41 @@ class Author:
 
 
 class Book:
+    all = []
+
+    def __init__(self, title):
+        self.title = title
+        Book.all.append(self)
+
+    def __repr__(self):
+        return f'<Book title={self.title}>'
     pass
 
 
 class Contract:
+    all = []
+
+    def __init__(self, author, book, date, royalties):
+        if not isinstance(author, Author):
+            raise Exception("author must be an instance of Author")
+        if not isinstance(book, Book):
+            raise Exception("book must be an instance of Book")
+        if not isinstance(date, str):
+            raise Exception("date must be a string")
+        if not isinstance(royalties, (int, float)):
+            raise Exception("royalties must be a number")
+
+        self.author = author
+        self.book = book
+        self.date = date
+        self.royalties = royalties
+        Contract.all.append(self)
+
+    @classmethod
+    def contracts_by_date(cls, date):
+        return [contract for contract in cls.all if contract.date == date]
+
+    def __repr__(self):
+        return f'<Contract author={self.author.name}, book={self.book.title}, date={self.date}, royalties={self.royalties}>'
+
     pass
